@@ -15,19 +15,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-          
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v1
-      with:
-        php-version: ${{ matrix.php-versions }}
-        tools: composer
+      - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: composer
 
-    - name: Install dependencies
-      run: ./tools/composer update --no-interaction --no-ansi --no-progress --no-suggest
+      - name: Validate composer.json and composer.lock
+        run: composer validate
 
-    - name: Run test suite
-      run: ./vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Install dependencies
+        run: ./tools/composer update --no-interaction --no-ansi --no-progress --no-suggest
+
+      - name: Run test suite
+        run: ./vendor/bin/phpunit --coverage-clover=coverage.xml
