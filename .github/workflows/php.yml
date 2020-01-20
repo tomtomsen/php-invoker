@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        operating-system: [ubuntu-latest]
         php-versions: ['7.3', '7.4']
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
@@ -17,7 +17,6 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
-          tools: composer
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -27,3 +26,6 @@ jobs:
 
       - name: Run test suite
         run: ./vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: send codecov report
+        run: bash <(curl -s https://codecov.io/bash)
